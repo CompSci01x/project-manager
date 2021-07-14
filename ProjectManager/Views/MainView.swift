@@ -15,24 +15,24 @@ struct MainView: View {
 
     var body: some View {
         List {
-            ForEach(projectListVM.allProjects) { prj in
+            ForEach(projectListVM.allProjects, id: \.id) { projectVM in
                 NavigationLink(destination: Text("Destination")) {
-                    ProjectCardView(project: prj)
+                    ProjectCardView(projectVM: projectVM)
                 }
-                .listRowBackground(prj.getColor())
+                .listRowBackground(projectVM.projectCardColor)
             }
-            .onDelete(perform: projectListVM.deleteItems)
+            .onDelete(perform: projectListVM.deleteProject)
         }
         .navigationTitle("Projects List")
         .navigationBarItems(trailing: Button(action: { isPresented.toggle() }) {
             Image(systemName: "plus")
         })
         .onAppear(perform: {
-            projectListVM.getAllItems()
+            projectListVM.getAllProjects()
         })
         .sheet(isPresented: $isPresented) {
             NavigationView {
-                AddProjectView(projectListVM: projectListVM, isPresented: $isPresented)
+                AddProjectView(projectListVM: projectListVM)
             }
         }
         

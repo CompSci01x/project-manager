@@ -17,8 +17,9 @@
 		5D841F912692C86C003C3663 /* ProjectListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D841F902692C86C003C3663 /* ProjectListViewModel.swift */; };
 		5D841F9B269537E4003C3663 /* AddProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D841F9A269537E4003C3663 /* AddProjectView.swift */; };
 		5D841F9D26956D0F003C3663 /* Color+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D841F9C26956D0F003C3663 /* Color+Codable.swift */; };
-		5D841FA4269575A6003C3663 /* Project+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D841FA2269575A6003C3663 /* Project+CoreDataClass.swift */; };
 		5D841FAF269A463A003C3663 /* ProjectDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D841FAE269A463A003C3663 /* ProjectDetailView.swift */; };
+		5DBBB30C269B6C7700C93440 /* EditProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBBB30B269B6C7700C93440 /* EditProjectView.swift */; };
+		5DBBB30E269B8EA700C93440 /* ProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBBB30D269B8EA700C93440 /* ProjectViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,8 +35,9 @@
 		5D841F902692C86C003C3663 /* ProjectListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListViewModel.swift; sourceTree = "<group>"; };
 		5D841F9A269537E4003C3663 /* AddProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectView.swift; sourceTree = "<group>"; };
 		5D841F9C26956D0F003C3663 /* Color+Codable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Color+Codable.swift"; sourceTree = "<group>"; };
-		5D841FA2269575A6003C3663 /* Project+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Project+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5D841FAE269A463A003C3663 /* ProjectDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailView.swift; sourceTree = "<group>"; };
+		5DBBB30B269B6C7700C93440 /* EditProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProjectView.swift; sourceTree = "<group>"; };
+		5DBBB30D269B8EA700C93440 /* ProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,8 +76,6 @@
 				5D841F8D2692C18E003C3663 /* ViewModels */,
 				5D841F7B2692C0EB003C3663 /* Assets.xcassets */,
 				5D841F852692C0EC003C3663 /* Info.plist */,
-				5D841F802692C0EC003C3663 /* Persistence.swift */,
-				5D841F822692C0EC003C3663 /* ProjectManager.xcdatamodeld */,
 				5D841F7D2692C0EC003C3663 /* Preview Content */,
 			);
 			path = ProjectManager;
@@ -92,8 +92,9 @@
 		5D841F8B2692C182003C3663 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				5D841FA2269575A6003C3663 /* Project+CoreDataClass.swift */,
 				5D841F9C26956D0F003C3663 /* Color+Codable.swift */,
+				5D841F802692C0EC003C3663 /* Persistence.swift */,
+				5D841F822692C0EC003C3663 /* ProjectManager.xcdatamodeld */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -104,6 +105,7 @@
 				5D841F792692C0EA003C3663 /* MainView.swift */,
 				5D841F9A269537E4003C3663 /* AddProjectView.swift */,
 				5D841FAE269A463A003C3663 /* ProjectDetailView.swift */,
+				5DBBB30B269B6C7700C93440 /* EditProjectView.swift */,
 				5DBBB302269A8E6F00C93440 /* SubViews */,
 			);
 			path = Views;
@@ -113,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				5D841F902692C86C003C3663 /* ProjectListViewModel.swift */,
+				5DBBB30D269B8EA700C93440 /* ProjectViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -196,8 +199,9 @@
 			files = (
 				5D841F812692C0EC003C3663 /* Persistence.swift in Sources */,
 				5D841F842692C0EC003C3663 /* ProjectManager.xcdatamodeld in Sources */,
+				5DBBB30C269B6C7700C93440 /* EditProjectView.swift in Sources */,
 				5D841F9D26956D0F003C3663 /* Color+Codable.swift in Sources */,
-				5D841FA4269575A6003C3663 /* Project+CoreDataClass.swift in Sources */,
+				5DBBB30E269B8EA700C93440 /* ProjectViewModel.swift in Sources */,
 				5D841F8F2692C58B003C3663 /* ProjectCardView.swift in Sources */,
 				5D841F9B269537E4003C3663 /* AddProjectView.swift in Sources */,
 				5D841F7A2692C0EA003C3663 /* MainView.swift in Sources */,

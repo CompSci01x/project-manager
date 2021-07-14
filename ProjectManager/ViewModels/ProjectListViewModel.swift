@@ -12,25 +12,26 @@ import CoreData
 class ProjectListViewModel: ObservableObject {
  
     private let persistenceController = PersistenceController.shared
-    @Published var allProjects: [Project] = []
+    @Published var allProjects: [ProjectViewModel] = []
  
-    func getAllItems() {
-        let request: NSFetchRequest<Project> = Project.fetchRequest()
+    func getAllProjects() {
         do {
-            allProjects = try persistenceController.container.viewContext.fetch(request)
-            allProjects.sort { $0.timestamp! > $1.timestamp! }
+            let request: NSFetchRequest<Project> = Project.fetchRequest()
+            allProjects = try persistenceController.container.viewContext.fetch(request).map(ProjectViewModel.init)
+            allProjects.sort { $0.timestamp > $1.timestamp }
         } catch {
             print(error)
         }
     }
     
-    func addProject(projectName: String, projectDesc: String, projectCardColor: Color) {
+    func addProject(projectName: String, projectDescription: String, projectCardColor: Color) {
         
         withAnimation {
             let newProject = Project(context: persistenceController.container.viewContext)
+
             newProject.timestamp = Date()
             newProject.projectName = projectName
-            newProject.projectDescription = projectDesc
+            newProject.projectDescription = projectDescription
             
             do {
                 try newProject.projectCardColor = NSKeyedArchiver.archivedData(withRootObject: UIColor(projectCardColor),
@@ -40,15 +41,17 @@ class ProjectListViewModel: ObservableObject {
             }
             
             persistenceController.save()
-            getAllItems()
+            getAllProjects()
         }
     }
     
     
-    func deleteItems(offsets: IndexSet) {
-        offsets.map { allProjects[$0] }.forEach(persistenceController.container.viewContext.delete)
-        persistenceController.save()
-        getAllItems()
+    func deleteProject(offsets: IndexSet) {
+        
+        offsets.map { allProjects[$0] }.forEach { projectVM in
+            projectVM.deleteProject()
+        }
+        getAllProjects()
     }
 
 }
@@ -56,14 +59,14 @@ class ProjectListViewModel: ObservableObject {
 
 extension ProjectListViewModel {
     
-    static func getAllItemsForPreview() -> [Project] {
+    static func getAllItemsForPreview() -> [ProjectViewModel] {
         
         let previewController = PersistenceController.preview
 
         let request: NSFetchRequest<Project> = Project.fetchRequest()
         do {
-            var previewProjects = try previewController.container.viewContext.fetch(request)
-            previewProjects.sort { $0.timestamp! > $1.timestamp! }
+            var previewProjects = try previewController.container.viewContext.fetch(request).map(ProjectViewModel.init)
+            previewProjects.sort { $0.timestamp > $1.timestamp }
             return previewProjects
         } catch {
             print(error)

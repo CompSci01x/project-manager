@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20F71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Project" representedClassName="Project" syncable="YES" codeGenerationType="category">
+    <entity name="Project" representedClassName="Project" syncable="YES" codeGenerationType="class">
         <attribute name="projectCardColor" optional="YES" attributeType="Binary"/>
         <attribute name="projectDescription" optional="YES" attributeType="String"/>
         <attribute name="projectName" optional="YES" attributeType="String"/>
         <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
     <elements>
-        <element name="Project" positionX="-87.671875" positionY="-177.703125" width="176.34765625" height="89"/>
+        <element name="Project" positionX="-87.671875" positionY="-177.703125" width="176.34765625" height="14"/>
     </elements>
 </model>

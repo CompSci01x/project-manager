@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct AddProjectView: View {
-    
+
+    @Environment(\.presentationMode) var presentationMode
+        
     @ObservedObject var projectListVM: ProjectListViewModel
-    @Binding var isPresented: Bool
     
     @State private var projectName: String = ""
-    @State private var projectDesc: String = ""
-    @State private var projectCardColor: Color = Color.green
+    @State private var projectDescription: String = ""
+    @State private var projectCardColor: Color = Color.random
+    
     @State private var showingAlert: Bool = false
     
     var body: some View {
@@ -25,7 +27,7 @@ struct AddProjectView: View {
                 }
                 
                 Section(header: Text("Description")) {
-                    TextEditor(text: $projectDesc)
+                    TextEditor(text: $projectDescription)
                         .frame(width: UIScreen.main.bounds.width - 75, height: 150, alignment: .topLeading)
                 }
                 
@@ -37,15 +39,17 @@ struct AddProjectView: View {
         }
         .navigationTitle("Add Project")
         .navigationBarItems(leading: Button("Cancel") {
-            isPresented = false
-
+            presentationMode.wrappedValue.dismiss()
+            
         }, trailing: Button("Done") {
             
             if (projectName.isEmpty) {
                 showingAlert = true
             } else {
-                projectListVM.addProject(projectName: projectName, projectDesc: projectDesc, projectCardColor: projectCardColor)
-                isPresented = false
+                projectListVM.addProject(projectName: projectName,
+                                         projectDescription: projectDescription,
+                                         projectCardColor: projectCardColor)
+                presentationMode.wrappedValue.dismiss()
             }
         })
         .alert(isPresented: $showingAlert) {
@@ -58,7 +62,7 @@ struct AddProjectView_Previews: PreviewProvider {
     
     static var previews: some View {
         NavigationView {
-            AddProjectView(projectListVM: ProjectListViewModel(), isPresented: .constant(true))
+            AddProjectView(projectListVM: ProjectListViewModel())
         }
     }
 }
