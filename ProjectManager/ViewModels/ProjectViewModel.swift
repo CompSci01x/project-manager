@@ -9,79 +9,104 @@ import Foundation
 import CoreData
 import SwiftUI
 
-struct ProjectViewModel {
+class ProjectViewModel: ObservableObject{
     
     // MARK: - Private vars/lets
-    
     private let persistenceController = PersistenceController.shared
-    private let project: Project
+    @Published private var projectModel: ProjectModel
     
-    // MARK: - Init
+    
+    // MARK: - Inits
+    init() {
+        projectModel = ProjectModel()
+    }
     
     init(project: Project) {
-        self.project = project
+        self.projectModel = ProjectModel(project: project)
+    }
+    
+    init(projectModel: ProjectModel) {
+        self.projectModel = projectModel
+    }
+      
+    
+        
+    // MARK: - Update and reset
+    func update() {
+        
+        let project = projectModel.getCoreDataProject()
+        
+        if project != nil {
+            project!.projectName = projectName
+            project!.projectDescription = projectDescription
+            
+            do {
+                project!.projectCardColor = try NSKeyedArchiver.archivedData(
+                    withRootObject: UIColor(projectCardColor),
+                    requiringSecureCoding: false)
+            } catch {
+                print(error)
+            }
+            
+        } else {
+            print("Could not find project with id = \(projectModel.id)")
+        }
+        
+        persistenceController.save()
+        print("saved = \(projectName)")
+    }
+    
+    
+    func reset() {
+        let project = projectModel.getCoreDataProject()
+        
+        if project != nil {
+            self.projectModel = ProjectModel(project: project!)
+        } else {
+            print("Could not find project with id = \(projectModel.id)")
+        }
     }
     
     
     // MARK: - Getters and Setters
-    
-    var id: NSManagedObjectID {
-        return project.objectID
+    var id: UUID {
+        return projectModel.id
     }
     
     var timestamp: Date {
         get {
-            return project.timestamp!
+            return projectModel.timestamp
         }
         set {
-            project.timestamp = newValue
+            projectModel.timestamp = newValue
         }
     }
     
     var projectName: String {
         get {
-            return project.projectName ?? "Unknown Project Name"
+            return projectModel.projectName
         }
         set {
-            project.projectName = newValue
+            projectModel.projectName = newValue
         }
     }
     
     var projectDescription: String {
         get {
-            return project.projectDescription ?? "No Description"
+            return projectModel.projectDescription
         }
         set {
-            project.projectDescription = newValue
+            projectModel.projectDescription = newValue
         }
     }
     
     var projectCardColor: Color {
         get {
-            if (project.projectCardColor != nil) {
-                do {
-                    return try Color(NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: project.projectCardColor!)!)
-                } catch {
-                    print(error)
-                }
-            }
-            return Color.clear
+            return projectModel.projectCardColor
         }
         set {
-            do {
-                try project.projectCardColor = NSKeyedArchiver.archivedData(withRootObject: UIColor(newValue),
-                                                                        requiringSecureCoding: false)
-            } catch {
-                print(error)
-            }
+            projectModel.projectCardColor = newValue
         }
-    }
-    
-    // MARK: - CoreData Delete
-    
-    func deleteProject() {
-        persistenceController.container.viewContext.delete(project)
-        persistenceController.save()
     }
     
 }

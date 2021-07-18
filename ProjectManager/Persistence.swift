@@ -16,13 +16,14 @@ struct PersistenceController {
         let viewContext = result.container.viewContext
         for num in 0..<10 {
             let newProject = Project(context: viewContext)
-            newProject.projectName = String(num)
+            newProject.projectName = "Preview Name"
             do {
                 try newProject.projectCardColor = NSKeyedArchiver.archivedData(withRootObject: UIColor.green,
                                                                         requiringSecureCoding: false)
             } catch {
                 print(error)
             }
+            newProject.projectId = UUID()
             newProject.timestamp = Date()
         }
         do {

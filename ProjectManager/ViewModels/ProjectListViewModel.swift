@@ -12,45 +12,51 @@ import CoreData
 class ProjectListViewModel: ObservableObject {
  
     private let persistenceController = PersistenceController.shared
-    @Published var allProjects: [ProjectViewModel] = []
+    @Published var allProjects: [ProjectModel] = []
  
     func getAllProjects() {
         do {
             let request: NSFetchRequest<Project> = Project.fetchRequest()
-            allProjects = try persistenceController.container.viewContext.fetch(request).map(ProjectViewModel.init)
+            allProjects = try persistenceController.container.viewContext.fetch(request).map(ProjectModel.init)
             allProjects.sort { $0.timestamp > $1.timestamp }
         } catch {
             print(error)
         }
     }
     
-    func addProject(projectName: String, projectDescription: String, projectCardColor: Color) {
-        
-        withAnimation {
-            let newProject = Project(context: persistenceController.container.viewContext)
+    func addNewProject(projectVM: ProjectViewModel) {
 
-            newProject.timestamp = Date()
-            newProject.projectName = projectName
-            newProject.projectDescription = projectDescription
-            
-            do {
-                try newProject.projectCardColor = NSKeyedArchiver.archivedData(withRootObject: UIColor(projectCardColor),
-                                                                        requiringSecureCoding: false)
-            } catch {
-                print(error)
-            }
-            
-            persistenceController.save()
-            getAllProjects()
+        let newProject = Project(context: persistenceController.container.viewContext)
+        
+        newProject.projectId = UUID()
+        newProject.timestamp = Date()
+        newProject.projectName = projectVM.projectName
+        newProject.projectDescription = projectVM.projectDescription
+       
+        do {
+            newProject.projectCardColor = try NSKeyedArchiver.archivedData(
+                withRootObject: UIColor(projectVM.projectCardColor),
+                requiringSecureCoding: false)
+        } catch {
+            print(error)
         }
+        
+        persistenceController.save()
+        getAllProjects()
     }
-    
     
     func deleteProject(offsets: IndexSet) {
         
-        offsets.map { allProjects[$0] }.forEach { projectVM in
-            projectVM.deleteProject()
+        offsets.map { allProjects[$0] }.forEach { projectModel in
+            
+            let project = projectModel.getCoreDataProject()
+            if project != nil {
+                persistenceController.container.viewContext.delete(project!)
+            } else {
+                print("Could not find project with id = \(projectModel.id)")
+            }
         }
+        persistenceController.save()
         getAllProjects()
     }
 
@@ -58,22 +64,22 @@ class ProjectListViewModel: ObservableObject {
 
 
 extension ProjectListViewModel {
-    
-    static func getAllItemsForPreview() -> [ProjectViewModel] {
-        
+
+    static func getAllProjectsForPreview() -> [ProjectModel] {
+
         let previewController = PersistenceController.preview
 
         let request: NSFetchRequest<Project> = Project.fetchRequest()
         do {
-            var previewProjects = try previewController.container.viewContext.fetch(request).map(ProjectViewModel.init)
+            var previewProjects = try previewController.container.viewContext.fetch(request).map(ProjectModel.init)
             previewProjects.sort { $0.timestamp > $1.timestamp }
             return previewProjects
         } catch {
             print(error)
         }
-        
+
         return []
     }
-    
+
 }
 

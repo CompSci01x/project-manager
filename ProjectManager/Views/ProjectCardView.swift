@@ -9,11 +9,11 @@ import SwiftUI
 
 struct ProjectCardView: View {
     
-    let projectVM: ProjectViewModel
+    let projectModel: ProjectModel
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("\(projectVM.projectName)")
+            Text("\(projectModel.projectName)")
                 .font(.headline)
             Spacer()
             HStack {
@@ -23,14 +23,14 @@ struct ProjectCardView: View {
             .font(.caption)
         }
         .padding()
-        .foregroundColor(projectVM.projectCardColor.accessibleFontColor)
+        .foregroundColor(projectModel.projectCardColor.accessibleFontColor)
     }
 }
 
 struct ProjectCardView_Previews: PreviewProvider {
     
     static var previews: some View {
-        ProjectCardView(projectVM: ProjectListViewModel.getAllItemsForPreview()[0])
+        ProjectCardView(projectModel: ProjectListViewModel.getAllProjectsForPreview()[0])
             .background(Color.green)
             .previewLayout(.fixed(width: 400, height: 60))
     }

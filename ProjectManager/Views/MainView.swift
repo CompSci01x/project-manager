@@ -15,11 +15,12 @@ struct MainView: View {
 
     var body: some View {
         List {
-            ForEach(projectListVM.allProjects, id: \.id) { projectVM in
-                NavigationLink(destination: Text("Destination")) {
-                    ProjectCardView(projectVM: projectVM)
+            ForEach(projectListVM.allProjects, id: \.id) { projectModel in
+                NavigationLink(destination:
+                                ProjectDetailView(projectModel: projectModel)) {
+                    ProjectCardView(projectModel: projectModel )
                 }
-                .listRowBackground(projectVM.projectCardColor)
+                .listRowBackground(projectModel.projectCardColor)
             }
             .onDelete(perform: projectListVM.deleteProject)
         }

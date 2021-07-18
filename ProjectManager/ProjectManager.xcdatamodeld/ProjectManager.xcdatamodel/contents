@@ -3,10 +3,11 @@
     <entity name="Project" representedClassName="Project" syncable="YES" codeGenerationType="class">
         <attribute name="projectCardColor" optional="YES" attributeType="Binary"/>
         <attribute name="projectDescription" optional="YES" attributeType="String"/>
-        <attribute name="projectName" optional="YES" attributeType="String"/>
+        <attribute name="projectId" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="projectName" attributeType="String"/>
         <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
     <elements>
-        <element name="Project" positionX="-87.671875" positionY="-177.703125" width="176.34765625" height="14"/>
+        <element name="Project" positionX="-87.671875" positionY="-177.703125" width="176.34765625" height="104"/>
     </elements>
 </model>
