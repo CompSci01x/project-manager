@@ -9,73 +9,55 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class ProjectViewModel: ObservableObject{
+class ProjectViewModel: ObservableObject {
     
     // MARK: - Private vars/lets
     private let persistenceController = PersistenceController.shared
-    @Published private var projectModel: ProjectModel
+    private var projectModel: Project
     
     
     // MARK: - Inits
     init() {
-        projectModel = ProjectModel()
+        projectModel = Project(context: persistenceController.container.viewContext)
+        
+        timestamp = Date()
+        projectName = ""
+        projectDescription = ""
+        projectCardColor = Color.random
+        
+        addTeamMember(name: "Team Leader")
     }
     
     init(project: Project) {
-        self.projectModel = ProjectModel(project: project)
+        projectModel = project
     }
     
-    init(projectModel: ProjectModel) {
-        self.projectModel = projectModel
-    }
-      
     
-        
-    // MARK: - Update and reset
-    func update() {
-        
-        let project = projectModel.getCoreDataProject()
-        
-        if project != nil {
-            project!.projectName = projectName
-            project!.projectDescription = projectDescription
-            
-            do {
-                project!.projectCardColor = try NSKeyedArchiver.archivedData(
-                    withRootObject: UIColor(projectCardColor),
-                    requiringSecureCoding: false)
-            } catch {
-                print(error)
-            }
-            
-        } else {
-            print("Could not find project with id = \(projectModel.id)")
-        }
-        
+    
+    // MARK: - Other Methods
+    func save() {
         persistenceController.save()
-        print("saved = \(projectName)")
+    }
+
+    func deleteProject() {
+        persistenceController.container.viewContext.delete(projectModel)
+    }
+
+    func refresh() {
+        objectWillChange.send()
+        persistenceController.container.viewContext.rollback()
     }
     
-    
-    func reset() {
-        let project = projectModel.getCoreDataProject()
-        
-        if project != nil {
-            self.projectModel = ProjectModel(project: project!)
-        } else {
-            print("Could not find project with id = \(projectModel.id)")
-        }
-    }
     
     
     // MARK: - Getters and Setters
-    var id: UUID {
-        return projectModel.id
+    var id: NSManagedObjectID {
+        projectModel.objectID
     }
     
-    var timestamp: Date {
+     var timestamp: Date {
         get {
-            return projectModel.timestamp
+            return projectModel.timestamp!
         }
         set {
             projectModel.timestamp = newValue
@@ -84,7 +66,7 @@ class ProjectViewModel: ObservableObject{
     
     var projectName: String {
         get {
-            return projectModel.projectName
+            return projectModel.projectName!
         }
         set {
             projectModel.projectName = newValue
@@ -93,7 +75,7 @@ class ProjectViewModel: ObservableObject{
     
     var projectDescription: String {
         get {
-            return projectModel.projectDescription
+            return projectModel.projectDescription!
         }
         set {
             projectModel.projectDescription = newValue
@@ -102,10 +84,47 @@ class ProjectViewModel: ObservableObject{
     
     var projectCardColor: Color {
         get {
-            return projectModel.projectCardColor
+            do {
+                return try Color(NSKeyedUnarchiver.unarchivedObject(
+                                    ofClass: UIColor.self,
+                                    from: projectModel.projectCardColor!)!)
+            } catch {
+                print(error)
+            }
+            
+            return Color.clear
         }
         set {
-            projectModel.projectCardColor = newValue
+            do {
+                try projectModel.projectCardColor = NSKeyedArchiver.archivedData(
+                    withRootObject: UIColor(newValue),
+                    requiringSecureCoding: false)
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    var teamMembers: [TeamMemberViewModel] {
+        get {
+            let team = (projectModel.teamMembers?.allObjects as! [TeamMember]).map(TeamMemberViewModel.init)
+            return team.sorted{$0.timestamp < $1.timestamp}
+        }
+    }
+    
+    func addTeamMember(name: String) {
+        let newTeamMember = TeamMemberViewModel()
+        
+        newTeamMember.timestamp = Date()
+        newTeamMember.name = name
+        newTeamMember.project = projectModel
+    }
+
+    func removeTeamMember(offsets: IndexSet) {
+        objectWillChange.send()
+        
+        offsets.forEach { idx in
+            teamMembers[idx].removeTeamMember()
         }
     }
     

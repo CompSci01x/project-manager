@@ -12,18 +12,19 @@ struct MainView: View {
     
     @StateObject private var projectListVM = ProjectListViewModel()
     @State private var isPresented = false
-
+    
     var body: some View {
+        
         List {
-            ForEach(projectListVM.allProjects, id: \.id) { projectModel in
-                NavigationLink(destination:
-                                ProjectDetailView(projectModel: projectModel)) {
-                    ProjectCardView(projectModel: projectModel )
+            ForEach(projectListVM.allProjects, id: \.id) { projectVM in
+                NavigationLink(destination: ProjectDetailView(projectVM: projectVM)) {
+                    ProjectCardView(projectVM:projectVM)
                 }
-                .listRowBackground(projectModel.projectCardColor)
+                .listRowBackground(projectVM.projectCardColor)
             }
             .onDelete(perform: projectListVM.deleteProject)
         }
+        .listStyle(InsetGroupedListStyle())
         .navigationTitle("Projects List")
         .navigationBarItems(trailing: Button(action: { isPresented.toggle() }) {
             Image(systemName: "plus")
@@ -31,11 +32,14 @@ struct MainView: View {
         .onAppear(perform: {
             projectListVM.getAllProjects()
         })
-        .sheet(isPresented: $isPresented) {
-            NavigationView {
-                AddProjectView(projectListVM: projectListVM)
-            }
-        }
+        .sheet(isPresented: $isPresented,
+               content: {
+                NavigationView {
+                    AddProjectView(projectListVM: projectListVM)
+                }
+                .onDisappear(perform: { projectListVM.refresh() })
+       })
+        
         
     }
 }

@@ -12,8 +12,10 @@ struct EditProjectView: View {
     @Environment(\.presentationMode) var presentationMode
 
     @ObservedObject var projectVM: ProjectViewModel
-    @State private var showingAlert: Bool = false
     
+    @State private var showingAlert: Bool = false
+    @State private var newTeamMemberName: String = ""
+
     var body: some View {
         
         List {
@@ -29,11 +31,31 @@ struct EditProjectView: View {
             Section(header: Text("Color")) {
                 ColorPicker("Card Color", selection: $projectVM.projectCardColor)
             }
+            
+            Section(header: Text("Team Member(s)")) {
+                ForEach(projectVM.teamMembers, id:\.id) { teamMember in
+                    Label(teamMember.name, systemImage: "person")
+                }
+                .onDelete(perform: { indexSet in
+                    projectVM.removeTeamMember(offsets: indexSet)
+                })
+                
+                HStack {
+                    TextField("New Team Member", text: $newTeamMemberName)
+                    Button(action: {
+                        withAnimation {
+                            projectVM.addTeamMember(name: newTeamMemberName)
+                            newTeamMemberName = ""
+                        }}) {
+                        Image(systemName: "plus.circle")
+                    }
+                    .disabled(newTeamMemberName.isEmpty)
+                }
+            }
         }
         .listStyle(InsetGroupedListStyle())
         .navigationTitle("Edit")
         .navigationBarItems(leading: Button("Cancel") {
-            projectVM.reset()
             presentationMode.wrappedValue.dismiss()
 
         }, trailing: Button("Done") {
@@ -41,7 +63,7 @@ struct EditProjectView: View {
             if (projectVM.projectName.isEmpty) {
                 showingAlert = true
             } else {
-                projectVM.update()
+                projectVM.save()
                 presentationMode.wrappedValue.dismiss()
             }
         })

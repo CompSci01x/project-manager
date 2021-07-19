@@ -9,12 +9,7 @@ import SwiftUI
 
 struct ProjectDetailView: View {
     
-    @StateObject private var projectVM: ProjectViewModel
-
-    init(projectModel: ProjectModel) {
-        self._projectVM = StateObject(wrappedValue: ProjectViewModel(projectModel: projectModel))
-    }
-    
+    @ObservedObject var projectVM: ProjectViewModel
     @State private var isPresented = false
     
     var body: some View {
@@ -38,18 +33,24 @@ struct ProjectDetailView: View {
             }
             
             Section(header: Text("Team Members")) {
-//                ForEach {
-//                    // team memebers
-//                }
+                ForEach(projectVM.teamMembers, id:\.id) { teamMember in
+                    NavigationLink(
+                        destination: Text("Destination"),
+                        label: {
+                            Label(teamMember.name, systemImage: "person")
+                        })
+                }
             }
         }
         .listStyle(InsetGroupedListStyle())
         .navigationTitle(projectVM.projectName)
         .navigationBarItems(trailing: Button("Edit") { isPresented.toggle() })
-        .fullScreenCover(isPresented: $isPresented, content: {
-            NavigationView {
-                EditProjectView(projectVM: projectVM)
-            }
+        .fullScreenCover(isPresented: $isPresented,
+                         onDismiss: { projectVM.refresh() },
+                         content: {
+                            NavigationView {
+                                EditProjectView(projectVM: projectVM)
+                            }
         })
     }
 }
@@ -59,7 +60,7 @@ struct ProjectDetailView_Previews: PreviewProvider {
     static let previewProjects = ProjectListViewModel.getAllProjectsForPreview()
     static var previews: some View {
         NavigationView {
-            ProjectDetailView(projectModel: previewProjects[0])
+            ProjectDetailView(projectVM: previewProjects[0])
         }
     }
 }

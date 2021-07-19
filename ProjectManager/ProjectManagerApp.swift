@@ -17,6 +17,8 @@ struct ProjectManagerApp: App {
                 MainView()
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
             }
+            .navigationViewStyle(StackNavigationViewStyle())
+
         }
     }
 }

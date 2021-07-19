@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5D6BD48726A2CB94000ED144 /* ProjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6BD48626A2CB94000ED144 /* ProjectModel.swift */; };
+		5D19330A26A4F1A800083754 /* TeamMemberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D19330926A4F1A800083754 /* TeamMemberViewModel.swift */; };
 		5D841F782692C0EA003C3663 /* ProjectManagerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D841F772692C0EA003C3663 /* ProjectManagerApp.swift */; };
 		5D841F7A2692C0EA003C3663 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D841F792692C0EA003C3663 /* MainView.swift */; };
 		5D841F7C2692C0EB003C3663 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D841F7B2692C0EB003C3663 /* Assets.xcassets */; };
@@ -24,7 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5D6BD48626A2CB94000ED144 /* ProjectModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectModel.swift; sourceTree = "<group>"; };
+		5D19330926A4F1A800083754 /* TeamMemberViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMemberViewModel.swift; sourceTree = "<group>"; };
 		5D841F742692C0EA003C3663 /* ProjectManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D841F772692C0EA003C3663 /* ProjectManagerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectManagerApp.swift; sourceTree = "<group>"; };
 		5D841F792692C0EA003C3663 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -72,14 +72,14 @@
 		5D841F762692C0EA003C3663 /* ProjectManager */ = {
 			isa = PBXGroup;
 			children = (
+				5D841F802692C0EC003C3663 /* Persistence.swift */,
+				5D841F822692C0EC003C3663 /* ProjectManager.xcdatamodeld */,
 				5D841F772692C0EA003C3663 /* ProjectManagerApp.swift */,
 				5D841F8B2692C182003C3663 /* Models */,
 				5D841F8C2692C189003C3663 /* Views */,
 				5D841F8D2692C18E003C3663 /* ViewModels */,
 				5D841F7B2692C0EB003C3663 /* Assets.xcassets */,
 				5D841F852692C0EC003C3663 /* Info.plist */,
-				5D841F802692C0EC003C3663 /* Persistence.swift */,
-				5D841F822692C0EC003C3663 /* ProjectManager.xcdatamodeld */,
 				5D841F7D2692C0EC003C3663 /* Preview Content */,
 			);
 			path = ProjectManager;
@@ -97,7 +97,6 @@
 			isa = PBXGroup;
 			children = (
 				5D841F9C26956D0F003C3663 /* Color+Codable.swift */,
-				5D6BD48626A2CB94000ED144 /* ProjectModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -119,6 +118,7 @@
 			children = (
 				5D841F902692C86C003C3663 /* ProjectListViewModel.swift */,
 				5DBBB30D269B8EA700C93440 /* ProjectViewModel.swift */,
+				5D19330926A4F1A800083754 /* TeamMemberViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -207,10 +207,10 @@
 				5DBBB30E269B8EA700C93440 /* ProjectViewModel.swift in Sources */,
 				5D841F8F2692C58B003C3663 /* ProjectCardView.swift in Sources */,
 				5D841F9B269537E4003C3663 /* AddProjectView.swift in Sources */,
-				5D6BD48726A2CB94000ED144 /* ProjectModel.swift in Sources */,
 				5D841F7A2692C0EA003C3663 /* MainView.swift in Sources */,
 				5D841FAF269A463A003C3663 /* ProjectDetailView.swift in Sources */,
 				5D841F912692C86C003C3663 /* ProjectListViewModel.swift in Sources */,
+				5D19330A26A4F1A800083754 /* TeamMemberViewModel.swift in Sources */,
 				5D841F782692C0EA003C3663 /* ProjectManagerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -16,15 +16,25 @@ struct PersistenceController {
         let viewContext = result.container.viewContext
         for num in 0..<10 {
             let newProject = Project(context: viewContext)
+
+            newProject.timestamp = Date()
             newProject.projectName = "Preview Name"
+            newProject.projectDescription = "Preview Description"
             do {
                 try newProject.projectCardColor = NSKeyedArchiver.archivedData(withRootObject: UIColor.green,
                                                                         requiringSecureCoding: false)
             } catch {
                 print(error)
             }
-            newProject.projectId = UUID()
-            newProject.timestamp = Date()
+            
+            for teamNum in 0..<3 {
+                let newTeamMember = TeamMember(context: viewContext)
+                
+                newTeamMember.timestamp = Date()
+                newTeamMember.name = "Member \(teamNum)"
+                newProject.addToTeamMembers(newTeamMember)
+            }
+
         }
         do {
             try viewContext.save()

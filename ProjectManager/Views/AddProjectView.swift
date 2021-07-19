@@ -10,10 +10,12 @@ import SwiftUI
 struct AddProjectView: View {
 
     @Environment(\.presentationMode) var presentationMode
-        
+
     @ObservedObject var projectListVM: ProjectListViewModel
     @StateObject private var projectVM = ProjectViewModel()
+    
     @State private var showingAlert: Bool = false
+    @State private var newTeamMemberName: String = ""
     
     var body: some View {
         VStack {
@@ -29,6 +31,28 @@ struct AddProjectView: View {
 
                 Section(header: Text("Color")) {
                     ColorPicker("Card Color", selection: $projectVM.projectCardColor)
+                }
+
+                Section(header: Text("Team Member(s)")) {
+                    
+                    ForEach(projectVM.teamMembers, id: \.id) { teamMember in
+                        Label(teamMember.name, systemImage: "person")
+                    }
+                    .onDelete(perform: { indexSet in
+                        projectVM.removeTeamMember(offsets: indexSet)
+                    })
+
+                    HStack {
+                        TextField("New Team Member", text: $newTeamMemberName)
+                        Button(action: {
+                            withAnimation {
+                                projectVM.addTeamMember(name: newTeamMemberName)
+                                newTeamMemberName = ""
+                            }}) {
+                            Image(systemName: "plus.circle")
+                        }
+                        .disabled(newTeamMemberName.isEmpty)
+                    }
                 }
             }
             .listStyle(InsetGroupedListStyle())
@@ -54,7 +78,7 @@ struct AddProjectView: View {
 }
 
 struct AddProjectView_Previews: PreviewProvider {
-    
+
     static var previews: some View {
         NavigationView {
             AddProjectView(projectListVM: ProjectListViewModel())
