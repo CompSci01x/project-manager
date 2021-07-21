@@ -7,13 +7,21 @@
         <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="teamMembers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TeamMember" inverseName="project" inverseEntity="TeamMember"/>
     </entity>
+    <entity name="Task" representedClassName="Task" syncable="YES" codeGenerationType="class">
+        <attribute name="name" attributeType="String"/>
+        <attribute name="taskDescription" optional="YES" attributeType="String"/>
+        <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="teamMember" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TeamMember" inverseName="tasks" inverseEntity="TeamMember"/>
+    </entity>
     <entity name="TeamMember" representedClassName="TeamMember" syncable="YES" codeGenerationType="class">
         <attribute name="name" attributeType="String"/>
         <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="project" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Project" inverseName="teamMembers" inverseEntity="Project"/>
+        <relationship name="tasks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Task" inverseName="teamMember" inverseEntity="Task"/>
     </entity>
     <elements>
         <element name="Project" positionX="-87.671875" positionY="-177.703125" width="176.34765625" height="104"/>
-        <element name="TeamMember" positionX="-63" positionY="-144" width="128" height="74"/>
+        <element name="TeamMember" positionX="-63" positionY="-144" width="128" height="89"/>
+        <element name="Task" positionX="-54" positionY="-135" width="128" height="89"/>
     </elements>
 </model>

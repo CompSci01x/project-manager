@@ -36,6 +36,7 @@ class ProjectViewModel: ObservableObject {
     
     // MARK: - Other Methods
     func save() {
+        objectWillChange.send()
         persistenceController.save()
     }
 
@@ -108,7 +109,7 @@ class ProjectViewModel: ObservableObject {
     var teamMembers: [TeamMemberViewModel] {
         get {
             let team = (projectModel.teamMembers?.allObjects as! [TeamMember]).map(TeamMemberViewModel.init)
-            return team.sorted{$0.timestamp < $1.timestamp}
+            return team.sorted{ $0.timestamp < $1.timestamp }
         }
     }
     

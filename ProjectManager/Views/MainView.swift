@@ -22,10 +22,12 @@ struct MainView: View {
                 }
                 .listRowBackground(projectVM.projectCardColor)
             }
-            .onDelete(perform: projectListVM.deleteProject)
+            .onDelete(perform: { indexSet in
+                projectListVM.deleteProject(offsets: indexSet)
+            })
         }
         .listStyle(InsetGroupedListStyle())
-        .navigationTitle("Projects List")
+        .navigationTitle("Projects")
         .navigationBarItems(trailing: Button(action: { isPresented.toggle() }) {
             Image(systemName: "plus")
         })
@@ -37,7 +39,9 @@ struct MainView: View {
                 NavigationView {
                     AddProjectView(projectListVM: projectListVM)
                 }
-                .onDisappear(perform: { projectListVM.refresh() })
+                .onDisappear(perform: {
+                    projectListVM.refresh()
+                })
        })
         
         

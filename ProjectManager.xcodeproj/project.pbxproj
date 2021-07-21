@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		5D19330A26A4F1A800083754 /* TeamMemberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D19330926A4F1A800083754 /* TeamMemberViewModel.swift */; };
+		5D19331026A62EF800083754 /* TaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D19330F26A62EF800083754 /* TaskListView.swift */; };
+		5D19331E26A657C400083754 /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D19331D26A657C400083754 /* TaskViewModel.swift */; };
+		5D19332026A67A7800083754 /* TaskCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D19331F26A67A7800083754 /* TaskCardView.swift */; };
+		5D19332226A68A3D00083754 /* AddTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D19332126A68A3D00083754 /* AddTaskView.swift */; };
 		5D841F782692C0EA003C3663 /* ProjectManagerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D841F772692C0EA003C3663 /* ProjectManagerApp.swift */; };
 		5D841F7A2692C0EA003C3663 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D841F792692C0EA003C3663 /* MainView.swift */; };
 		5D841F7C2692C0EB003C3663 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D841F7B2692C0EB003C3663 /* Assets.xcassets */; };
@@ -25,6 +29,10 @@
 
 /* Begin PBXFileReference section */
 		5D19330926A4F1A800083754 /* TeamMemberViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMemberViewModel.swift; sourceTree = "<group>"; };
+		5D19330F26A62EF800083754 /* TaskListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListView.swift; sourceTree = "<group>"; };
+		5D19331D26A657C400083754 /* TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModel.swift; sourceTree = "<group>"; };
+		5D19331F26A67A7800083754 /* TaskCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCardView.swift; sourceTree = "<group>"; };
+		5D19332126A68A3D00083754 /* AddTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskView.swift; sourceTree = "<group>"; };
 		5D841F742692C0EA003C3663 /* ProjectManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D841F772692C0EA003C3663 /* ProjectManagerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectManagerApp.swift; sourceTree = "<group>"; };
 		5D841F792692C0EA003C3663 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -53,6 +61,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5D19330B26A62E1D00083754 /* OptionViews */ = {
+			isa = PBXGroup;
+			children = (
+				5D841F9A269537E4003C3663 /* AddProjectView.swift */,
+				5DBBB30B269B6C7700C93440 /* EditProjectView.swift */,
+				5D19332126A68A3D00083754 /* AddTaskView.swift */,
+			);
+			name = OptionViews;
+			sourceTree = "<group>";
+		};
+		5D19330C26A62E4D00083754 /* MainViews */ = {
+			isa = PBXGroup;
+			children = (
+				5D841F792692C0EA003C3663 /* MainView.swift */,
+				5D841FAE269A463A003C3663 /* ProjectDetailView.swift */,
+				5D19330F26A62EF800083754 /* TaskListView.swift */,
+			);
+			name = MainViews;
+			sourceTree = "<group>";
+		};
 		5D841F6B2692C0EA003C3663 = {
 			isa = PBXGroup;
 			children = (
@@ -104,10 +132,8 @@
 		5D841F8C2692C189003C3663 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				5D841F792692C0EA003C3663 /* MainView.swift */,
-				5D841F9A269537E4003C3663 /* AddProjectView.swift */,
-				5D841FAE269A463A003C3663 /* ProjectDetailView.swift */,
-				5DBBB30B269B6C7700C93440 /* EditProjectView.swift */,
+				5D19330C26A62E4D00083754 /* MainViews */,
+				5D19330B26A62E1D00083754 /* OptionViews */,
 				5DBBB302269A8E6F00C93440 /* SubViews */,
 			);
 			path = Views;
@@ -119,6 +145,7 @@
 				5D841F902692C86C003C3663 /* ProjectListViewModel.swift */,
 				5DBBB30D269B8EA700C93440 /* ProjectViewModel.swift */,
 				5D19330926A4F1A800083754 /* TeamMemberViewModel.swift */,
+				5D19331D26A657C400083754 /* TaskViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -127,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				5D841F8E2692C58B003C3663 /* ProjectCardView.swift */,
+				5D19331F26A67A7800083754 /* TaskCardView.swift */,
 			);
 			name = SubViews;
 			sourceTree = "<group>";
@@ -201,13 +229,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D841F812692C0EC003C3663 /* Persistence.swift in Sources */,
+				5D19331E26A657C400083754 /* TaskViewModel.swift in Sources */,
 				5D841F842692C0EC003C3663 /* ProjectManager.xcdatamodeld in Sources */,
+				5D19332226A68A3D00083754 /* AddTaskView.swift in Sources */,
 				5DBBB30C269B6C7700C93440 /* EditProjectView.swift in Sources */,
 				5D841F9D26956D0F003C3663 /* Color+Codable.swift in Sources */,
 				5DBBB30E269B8EA700C93440 /* ProjectViewModel.swift in Sources */,
 				5D841F8F2692C58B003C3663 /* ProjectCardView.swift in Sources */,
 				5D841F9B269537E4003C3663 /* AddProjectView.swift in Sources */,
+				5D19331026A62EF800083754 /* TaskListView.swift in Sources */,
 				5D841F7A2692C0EA003C3663 /* MainView.swift in Sources */,
+				5D19332026A67A7800083754 /* TaskCardView.swift in Sources */,
 				5D841FAF269A463A003C3663 /* ProjectDetailView.swift in Sources */,
 				5D841F912692C86C003C3663 /* ProjectListViewModel.swift in Sources */,
 				5D19330A26A4F1A800083754 /* TeamMemberViewModel.swift in Sources */,

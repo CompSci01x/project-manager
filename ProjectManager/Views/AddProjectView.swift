@@ -67,6 +67,7 @@ struct AddProjectView: View {
                 showingAlert = true
             } else {
                 projectListVM.addNewProject(projectVM: projectVM)
+                projectListVM.save()
                 presentationMode.wrappedValue.dismiss()
             }
         })

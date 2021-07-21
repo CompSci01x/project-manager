@@ -33,6 +33,14 @@ struct PersistenceController {
                 newTeamMember.timestamp = Date()
                 newTeamMember.name = "Member \(teamNum)"
                 newProject.addToTeamMembers(newTeamMember)
+                
+                for taskNum in 0..<3 {
+                    let newTask = Task(context: viewContext)
+                    
+                    newTask.timestamp = Date()
+                    newTask.name = "Preview Task"
+                    newTeamMember.addToTasks(newTask)
+                }
             }
 
         }

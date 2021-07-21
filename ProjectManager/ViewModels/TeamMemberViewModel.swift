@@ -22,6 +22,11 @@ class TeamMemberViewModel: ObservableObject {
         teamMemberModel.timestamp = Date()
         teamMemberModel.name = ""
         teamMemberModel.project = nil
+        
+        let welcomeTask = TaskViewModel()
+        welcomeTask.name = "Welcome"
+        welcomeTask.taskDescription = "Welcome to the team!"
+        addNewTask(taskVM: welcomeTask)
     }
     
     init(teamMember: TeamMember) {
@@ -31,10 +36,19 @@ class TeamMemberViewModel: ObservableObject {
     
     
     // MARK: - Other Methods
+    func save() {
+        objectWillChange.send()
+        persistenceController.save()
+    }
+    
     func removeTeamMember() {
         persistenceController.container.viewContext.delete(teamMemberModel)
     }
-    
+
+    func refresh() {
+        objectWillChange.send()
+        persistenceController.container.viewContext.rollback()
+    }
     
     
     // MARK: - Getters and Setters
@@ -67,6 +81,29 @@ class TeamMemberViewModel: ObservableObject {
         set {
             teamMemberModel.project = newValue
         }
+    }
+    
+    var tasks: [TaskViewModel] {
+        get {
+            let tasks = (teamMemberModel.tasks?.allObjects as! [Task]).map(TaskViewModel.init)
+            return tasks.sorted{ $0.timestamp > $1.timestamp }
+        }
+    }
+    
+    func addNewTask(taskVM: TaskViewModel) {
+        
+        taskVM.timestamp = Date()
+        taskVM.teamMember = teamMemberModel        
+    }
+    
+    func deleteTask(offsets: IndexSet) {
+        objectWillChange.send()
+
+        offsets.forEach { idx in
+            tasks[idx].deleteTask()
+        }
+        
+        persistenceController.save()
     }
     
 }

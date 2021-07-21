@@ -24,26 +24,25 @@ class ProjectListViewModel: ObservableObject {
         }
     }
     
+    func save() {
+        persistenceController.save()
+        getAllProjects()
+    }
+    
     func refresh() {
         persistenceController.container.viewContext.rollback()
     }
     
     func addNewProject(projectVM: ProjectViewModel) {
-        
         projectVM.timestamp = Date()
-        
-        persistenceController.save()
-        getAllProjects()
     }
     
     func deleteProject(offsets: IndexSet) {
-
         offsets.forEach { idx in
             allProjects[idx].deleteProject()
         }
         
-        persistenceController.save()
-        getAllProjects()
+        save()
     }
 
 }

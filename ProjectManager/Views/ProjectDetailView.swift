@@ -33,11 +33,11 @@ struct ProjectDetailView: View {
             }
             
             Section(header: Text("Team Members")) {
-                ForEach(projectVM.teamMembers, id:\.id) { teamMember in
+                ForEach(projectVM.teamMembers, id:\.id) { teamMemberVM in
                     NavigationLink(
-                        destination: Text("Destination"),
+                        destination: TaskListView(teamMemberVM: teamMemberVM),
                         label: {
-                            Label(teamMember.name, systemImage: "person")
+                            Label(teamMemberVM.name, systemImage: "person")
                         })
                 }
             }
