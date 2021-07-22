@@ -4,9 +4,9 @@
 Utilizing Core Data and endeavoring to follow the MVVM software architecture pattern.*
 
 **Feature Demos:**
-- [View / Add Project(s)](#view-/-add-projects)
-- [View / Edit Project Details](#view-/-edit-project-details)
-- [View / Add Task(s)](#view-/-add-tasks)
+- [View / Add Project(s)](#view--add-projects)
+- [View / Edit Project Details](#view--edit-project-details)
+- [View / Add Task(s)](#view--add-tasks)
 
 
 ## View / Add Project(s)
